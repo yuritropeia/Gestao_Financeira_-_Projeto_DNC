@@ -9,7 +9,7 @@ export const register = async (params) => {
     // Check if user already exists
     const user = await getByEmail(params.email);
     if (user) {
-        throw new Error('This e-mail already exists');
+        return { error: 'Uma conta com o e-mail inserido já existe.' };
     }
 
     // Create new user
@@ -25,13 +25,13 @@ export const login = async (params) => {
     // Verify if user exists
     const user = await getByEmail(params.email);
     if (!user) {
-        throw new Error('Invalid e-mail or password');
+        return { error: 'E-mail ou senha inválidos.' };
     }
 
     // Compare password
     const passwordCorrect = await bcrypt.compareSync(params.password, user.password);
     if (!passwordCorrect) {
-        throw new Error('Invalid e-mail or password');
+        return { error: 'E-mail ou senha inválidos.' }
     }
 
     // Generate JWT token
