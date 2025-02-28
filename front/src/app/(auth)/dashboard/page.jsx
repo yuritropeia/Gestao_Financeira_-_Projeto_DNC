@@ -3,7 +3,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 //import { CategoriasCreate } from '../../../components/Categorias/CategoriasCreate'
-import { CategoriasUpdate } from '../../../components/Categorias/CategoriasUpdate'
+//import { CategoriasUpdate } from '../../../components/Categorias/CategoriasUpdate'
+//import { MetasCreate } from '../../../components/Metas/MetasCreate'
+import { MetasUpdate } from '../../../components/Metas/MetasUpdate'
 
 export const DashboardPage = () => {
     
@@ -32,7 +34,7 @@ export const DashboardPage = () => {
     return (
         <div>
             <h1>Dashboard</h1>
-            <CategoriasUpdate categoriaId={1}></CategoriasUpdate>
+            <MetasUpdate metaId={1}></MetasUpdate>
         </div>
     );
 };
