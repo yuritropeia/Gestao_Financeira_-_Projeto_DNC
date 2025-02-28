@@ -41,7 +41,7 @@ export const MetasCreate = () => {
         } catch (error) {
             setNotification({
                 open: true,
-                message: error.response.data.error,
+                message: error.response.data.message,
                 severity: 'error'
             })
         }

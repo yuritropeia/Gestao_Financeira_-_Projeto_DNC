@@ -4,7 +4,7 @@ import { authMiddleware} from '../../middleware/authMiddleware.js'
 
 const router = Router();
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', authMiddleware, async (_, res) => {
     const data = await getAll(req.user.id);
     res.status(200).json({ data });
 });
