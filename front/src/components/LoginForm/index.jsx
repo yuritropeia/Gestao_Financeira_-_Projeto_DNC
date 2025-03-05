@@ -7,6 +7,7 @@ import { useState } from 'react'
 export const LoginForm = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [showPassword, setShowPassword] = useState(false);
 
     const [notification, setNotification] = useState({
         open: false,
@@ -53,14 +54,43 @@ export const LoginForm = () => {
     })
     }
 
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     return (
         <>
             <S.Form onSubmit={ onSubmit }>
-                <S.H1>Login</S.H1>
+                <S.Typography variant='h1' color='primary' style={{marginBottom: '64px'}}>YOURfinance.IO</S.Typography>
                 <S.TextField onChange={onChangeValue} name= "email" label="E-mail" variant="outlined" color="primary" fullWidth/>
-                <S.TextField onChange={onChangeValue} name= "password" type="password" label="Password" variant="outlined" color="primary" fullWidth/>
-                <S.Button variant="contained" color="success" type="submit">Enviar</S.Button>
+                <S.FormControl fullWidth variant="outlined">
+                                    <S.InputLabel htmlFor="outlined-adornment-password">Senha</S.InputLabel>
+                                    <S.OutlinedInput 
+                                        id="outlined-adornment-password"
+                                        name="password"
+                                        onChange={onChangeValue}
+                                        type={showPassword ? 'text' : 'password'}
+                                        endAdornment={
+                                            <S.InputAdornment position="end">
+                                                <S.IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >{showPassword ? <S.VisibilityOff /> : <S.Visibility />}
+                                                </S.IconButton>
+                                        </S.InputAdornment>
+                                    }
+                                        label="Password"
+                                    />
+                                </S.FormControl>
+                <S.Button variant="contained" color="primary" type="submit" fullWidth>Enviar</S.Button>
+                <S.Link href="/register">Criar  uma conta</S.Link>
             </S.Form>
+
+            
 
             <S.Snackbar open={notification.open} autoHideDuration={3000} onClose={handleClose}>
                 <S.Alert onClose={handleClose} variant="filled" severity={notification.severity} sx={{width: '100%'}}>

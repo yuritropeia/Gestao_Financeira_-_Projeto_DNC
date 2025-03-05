@@ -7,6 +7,7 @@ import { useState } from 'react'
 export const RegisterForm = () => {
     const [name, setName] = useState();
     const [email, setEmail] = useState();
+    const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState();
 
     const [notification, setNotification] = useState({
@@ -55,16 +56,44 @@ export const RegisterForm = () => {
         severity: ''
     })
     }
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
     
 
     return (
         <>
             <S.Form onSubmit={ onSubmit }>
-                <S.H1>Cadastrar-se</S.H1>
-                <S.TextField onChange={onChangeValue} name= "name" label="Nome" variant="outlined" color="primary" />
-                <S.TextField onChange={onChangeValue} name= "email" label="E-mail" variant="outlined" color="primary"/>
-                <S.TextField onChange={onChangeValue} name= "password" type="password" label="Senha" variant="outlined" color="primary" />
-                <S.Button variant="contained" color="success" type="submit">Registrar</S.Button>
+                <S.Typography variant='h1' color='primary' style={{marginBottom: '64px'}}>YOURfinance.IO</S.Typography>
+                <S.Typography variant='h2' style={{marginBottom: '64px'}}>Crie sua conta</S.Typography>
+                <S.TextField onChange={onChangeValue} name="name" label="Nome" variant="outlined" color="primary" fullWidth />
+                <S.TextField onChange={onChangeValue} name= "email" label="E-mail" variant="outlined" color="primary" fullWidth/>
+                <S.FormControl fullWidth variant="outlined">
+                    <S.InputLabel htmlFor="outlined-adornment-password">Senha</S.InputLabel>
+                    <S.OutlinedInput 
+                        id="outlined-adornment-password"
+                        name="password"
+                        onChange={onChangeValue}
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <S.InputAdornment position="end">
+                                <S.IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >{showPassword ? <S.VisibilityOff /> : <S.Visibility />}
+                                </S.IconButton>
+                        </S.InputAdornment>
+                    }
+                        label="Password"
+                    />
+                </S.FormControl>
+                <S.Button variant="contained" color="primary" type="submit" fullWidth>Fazer cadastro</S.Button>
+            <div>Já possui uma conta? <S.Link href={"/login"}>Faça login aqui</S.Link></div>
             </S.Form>
             <S.Snackbar open={notification.open} autoHideDuration={3000} onClose={handleClose}>
                 <S.Alert onClose={handleClose} variant="filled" severity={notification.severity} sx={{width: '100%'}}>
