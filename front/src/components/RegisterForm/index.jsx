@@ -28,9 +28,6 @@ export const RegisterForm = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log('name: ', name)
-        console.log('email: ', email)
-        console.log('password: ', password)
         try {
             const response = await axios.post('http://localhost:8080/auth/register', { name, email, password })
             localStorage.setItem('token', response.data.data.token)

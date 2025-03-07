@@ -1,6 +1,6 @@
 import knex from '../../services/knex.js'
 
-const TABLE = 'transacoes';
+const TABLE = 'transactions';
 
 export const getAll = (userId) => {
     return knex(TABLE).select('*').where({ user_id: userId });

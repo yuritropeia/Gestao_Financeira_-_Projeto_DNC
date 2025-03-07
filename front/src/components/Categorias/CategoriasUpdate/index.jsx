@@ -4,7 +4,7 @@ import * as S from './style.jsx'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-export const CategoriasUpdate = ({categoriaId}) => {
+export const CategoriasUpdate = ({categoryId}) => {
     const [name, setName] = useState();
     const [userId, setUserId] = useState();
 
@@ -23,7 +23,7 @@ export const CategoriasUpdate = ({categoriaId}) => {
         const getCategoria = async () => {
             try {
                 const token = localStorage.getItem('token')
-                const response = await axios.get(`http://localhost:8080/categorias/${ categoriaId }`, {
+                const response = await axios.get(`http://localhost:8080/categories/${ categoryId }`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -43,14 +43,14 @@ export const CategoriasUpdate = ({categoriaId}) => {
         }
 
         getCategoria()
-    }, [categoriaId])
+    }, [categoryId])
 
     const onSubmit = async (e) => {
         e.preventDefault()
         console.log('name: ', name)
         try {
             const token = localStorage.getItem('token')
-            await axios.put(`http://localhost:8080/categorias/${ categoriaId}`, { name, user_Id: userId }, {
+            await axios.put(`http://localhost:8080/categories/${ categoryId}`, { name, user_Id: userId }, {
                 headers: {
                     Authorization: `Bearer ${ token }`
                 }

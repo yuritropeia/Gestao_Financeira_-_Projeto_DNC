@@ -2,9 +2,13 @@
 
 import * as S from './style.jsx'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
-export const CategoriasCreate = () => {
+export const CategoriasCreate = ({openModal, closeModal}) => {
     const [name, setName] = useState();
 
     const [notification, setNotification] = useState({
@@ -23,7 +27,7 @@ export const CategoriasCreate = () => {
         console.log('name: ', name)
         try {
             const token = localStorage.getItem('token')
-            const response = await axios.post('http://localhost:8080/categorias', { name }, {
+            const response = await axios.post('http://localhost:8080/categories', { name }, {
                 headers: {
                     Authorization: `Bearer ${ token }`
                 }
@@ -54,19 +58,38 @@ export const CategoriasCreate = () => {
     })
     }
 
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (openModal) {
+            setOpen(true);
+        } 
+    }, [openModal])
+
+    const handleCloseModal = () => {
+        setOpen(false);
+        closeModal(false);
+    };
+
     return (
         <>
-            <S.Form onSubmit={ onSubmit }>
-                <S.H1>Criar categoria</S.H1>
-                <S.TextField onChange={onChangeValue} name= "name" label="Name" variant="outlined" color="primary" fullWidth/>
-                <S.Button variant="contained" color="success" type="submit">Enviar</S.Button>
-            </S.Form>
-
             <S.Snackbar open={notification.open} autoHideDuration={3000} onClose={handleClose}>
                 <S.Alert onClose={handleClose} variant="filled" severity={notification.severity} sx={{width: '100%'}}>
                     {notification.message}
                 </S.Alert>
             </S.Snackbar>
+
+            <Dialog open={open} onClose={handleCloseModal}>
+                <DialogTitle>Nova categoria</DialogTitle>
+                <DialogContent>
+                <S.Form onSubmit={ onSubmit }>
+                    <S.TextField onChange={onChangeValue} name= "name" label="Descrição" variant="outlined" color="primary" fullWidth/>
+                </S.Form>
+                </DialogContent>
+                <DialogActions style={{display: 'flex', justifyContent: 'Center'}}>
+                <S.Button variant="contained" color="success" type="submit" onClick={onSubmit}>Salvar</S.Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

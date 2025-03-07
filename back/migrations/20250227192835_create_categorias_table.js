@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 export const up = function(knex) {
-return knex.schema.createTable('categorias', (table) => {
+return knex.schema.createTable('categories', (table) => {
     table.bigIncrements('id');
     table.string('name');
     table.bigint('user_id').unsigned().references('id').inTable('users');
@@ -16,5 +16,5 @@ return knex.schema.createTable('categorias', (table) => {
  * @returns { Promise<void> }
  */
 export const down = function(knex) {
-    return knex.schema.dropTable('categorias');
+    return knex.schema.dropTable('categories');
 };

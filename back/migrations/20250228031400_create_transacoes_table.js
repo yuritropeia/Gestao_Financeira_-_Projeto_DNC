@@ -3,13 +3,13 @@
  * @returns { Promise<void> }
  */
 export const up = function(knex) {
-return knex.schema.createTable('transacoes', (table) => {
+return knex.schema.createTable('transactions', (table) => {
     table.bigIncrements('id');
     table.string('description');
     table.integer('value');
     table.date('date');
     table.string('type');
-    table.bigint('categoria_id').unsigned().references('id').inTable('categorias');
+    table.bigint('category_id').unsigned().references('id').inTable('categories');
     table.bigint('user_id').unsigned().references('id').inTable('users');
     table.timestamps(true, true);
 });
@@ -20,5 +20,5 @@ return knex.schema.createTable('transacoes', (table) => {
  * @returns { Promise<void> }
  */
 export const down = function(knex) {
-    return knex.schema.dropTable('transacoes');
+    return knex.schema.dropTable('transactions');
 };

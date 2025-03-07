@@ -18,9 +18,9 @@ app.use(bearerToken());
 
 app.use('/users', userRouter);
 app.use('/auth', authRouter);
-app.use('/categorias', categoriaRouter);
-app.use('/metas', metaRouter);
-app.use('/transacoes', transacaoRouter);
+app.use('/categories', categoriaRouter);
+app.use('/goals', metaRouter);
+app.use('/transactions', transacaoRouter);
 
 app.get('/health', (_, res) => {
     return res.send('Sistema está operacional!');

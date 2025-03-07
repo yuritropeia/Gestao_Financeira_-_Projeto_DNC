@@ -4,10 +4,10 @@ import * as S from './style.jsx'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-export const MetasUpdate = ({metaId}) => {
+export const MetasUpdate = ({goalId}) => {
     const [description, setDescription] = useState();
     const [value, setValue] = useState();
-    const [dateMeta, setDateMeta] = useState();
+    const [dateGoal, setDateGoal] = useState();
     const [userId, setUserId] = useState();
 
     const [notification, setNotification] = useState({
@@ -20,14 +20,14 @@ export const MetasUpdate = ({metaId}) => {
         const { name, value } = e.target
         if (name === 'description') setDescription(value)
         if (name === 'value') setValue(value)
-        if (name === 'dateMeta') setDateMeta(value)
+        if (name === 'dateGoal') setDateGoal(value)
     }
     
     useEffect(() => {
         const getMeta = async () => {
             try {
                 const token = localStorage.getItem('token')
-                const response = await axios.get(`http://localhost:8080/metas/${ metaId }`, {
+                const response = await axios.get(`http://localhost:8080/goals/${ goalId }`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -35,7 +35,7 @@ export const MetasUpdate = ({metaId}) => {
 
                 setDescription(response.data.data.description);
                 setValue(response.data.data.value);
-                setDateMeta(response.data.data.date);
+                setDateGoal(response.data.data.date);
                 setUserId(response.data.data.user_id);
                 
             } catch (error) {
@@ -48,13 +48,13 @@ export const MetasUpdate = ({metaId}) => {
         }
 
         getMeta()
-    }, [metaId])
+    }, [goalId])
 
     const onSubmit = async (e) => {
         e.preventDefault()
         try {
             const token = localStorage.getItem('token')
-            await axios.put(`http://localhost:8080/metas/${ metaId }`, { description, value, date: dateMeta, user_id: userId }, {
+            await axios.put(`http://localhost:8080/goals/${ goalId }`, { description, value, date: dateGoal, user_id: userId }, {
                 headers: {
                     Authorization: `Bearer ${ token }`
                 }
@@ -90,7 +90,7 @@ export const MetasUpdate = ({metaId}) => {
                 <S.H1>Atualizar Meta</S.H1>
                 <S.TextField onChange={onChangeValue} name="description" label="Descricao" variant="outlined" value={description} color="primary" fullWidth/>
                 <S.TextField onChange={onChangeValue} name="value" label="Valor" variant="outlined" value={value} color="primary" fullWidth />
-                <S.TextField onChange={onChangeValue} name="dateMeta" label="Data da Meta" variant="outlined" value={dateMeta} color="primary" fullWidth/>
+                <S.TextField onChange={onChangeValue} name="dateGoal" label="Data da Meta" variant="outlined" value={dateGoal} color="primary" fullWidth/>
                 <S.Button variant="contained" color="success" type="submit">Enviar</S.Button>
             </S.Form>
 

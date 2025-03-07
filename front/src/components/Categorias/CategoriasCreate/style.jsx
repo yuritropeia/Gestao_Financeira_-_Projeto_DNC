@@ -19,7 +19,7 @@ export const Form = styled.form`
     align-items: center;
     justify-content: center;
     gap: 12px;
-    min-height: 800px;
+    min-height: 100px;
 `
 
 export const Alert = styled(AlertMui)`

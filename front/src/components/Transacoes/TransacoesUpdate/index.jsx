@@ -4,13 +4,13 @@ import * as S from './style.jsx'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-export const TransacoesUpdate = ({transacaoId}) => {
+export const TransacoesUpdate = ({transactionId}) => {
     const [description, setDescription] = useState();
     const [value, setValue] = useState();
     const [type, setType] = useState('Receita');
-    const [dateTransacao, setDateTransacao] = useState();
-    const [categoria, setCategoria] = useState('');
-    const [categorias, setCategorias] = useState([]);
+    const [dateTransaction, setDateTransaction] = useState();
+    const [category, setCategory] = useState('');
+    const [categories, setCategories] = useState([]);
     const [userId, setUserId] = useState();
 
     const [notification, setNotification] = useState({
@@ -20,15 +20,15 @@ export const TransacoesUpdate = ({transacaoId}) => {
     });
 
     useEffect(() => {
-        const getCategorias = async () => {
+        const getCategories = async () => {
             try {
                 const token = localStorage.getItem('token')
-                const response = await axios.get('http://localhost:8080/categorias', {
+                const response = await axios.get('http://localhost:8080/categories', {
                     headers: {
                         Authorization: `Bearer ${ token}`
                     }
                 })
-                setCategorias(response.data.data)
+                setCategories(response.data.data)
             } catch (error) {
                 setNotification({
                     open: true,
@@ -37,7 +37,7 @@ export const TransacoesUpdate = ({transacaoId}) => {
                 })
             }
         }
-        getCategorias();
+        getCategories();
     }, [])
 
     const onChangeValue = (e) => {
@@ -45,26 +45,26 @@ export const TransacoesUpdate = ({transacaoId}) => {
         if (name === 'description') setDescription(value)
         if (name === 'value') setValue(value)
         if (name === 'type') setType(value)
-        if (name === 'dateTransacao') setDateTransacao(value)
-        if (name === 'categoria') setCategoria(value)
+        if (name === 'dateTransaction') setDateTransaction(value)
+        if (name === 'category') setCategory(value)
     }
 
     useEffect(() => {
-        const getTransacao = async () => {
+        const getTransaction = async () => {
             try {
                 const token = localStorage.getItem('token')
                 
-                const response = await axios.get(`http://localhost:8080/transacoes/${transacaoId}`, {
+                const response = await axios.get(`http://localhost:8080/transactions/${transactionId}`, {
                     headers: {
                         Authorization: `Bearer ${ token}`
                     }
                 })
                 setDescription(response.data.data.description);
                 setValue(response.data.data.value);
-                setDateTransacao(response.data.data.date);
+                setDateTransaction(response.data.data.date);
                 setUserId(response.data.data.user_id);
                 setType(response.data.data.type);
-                setCategoria(response.data.data.categoria_id);
+                setCategory(response.data.data.category_id);
 
             } catch (error) {
                 setNotification({
@@ -74,8 +74,8 @@ export const TransacoesUpdate = ({transacaoId}) => {
                 })
             }
         }
-        getTransacao();
-    }, [transacaoId])
+        getTransaction();
+    }, [transactionId])
 
 
 
@@ -84,7 +84,7 @@ export const TransacoesUpdate = ({transacaoId}) => {
         console.log('name: ', description)
         try {
             const token = localStorage.getItem('token')
-            const response = await axios.put(`http://localhost:8080/transacoes/${transacaoId}`, { description, value, date: dateTransacao, type, categoria_id: categoria, user_id: userId}, {
+            const response = await axios.put(`http://localhost:8080/transacoes/${transactionId}`, { description, value, date: dateTransaction, type, category_id: category, user_id: userId}, {
                 headers: {
                     Authorization: `Bearer ${ token }`
                 }
@@ -92,7 +92,7 @@ export const TransacoesUpdate = ({transacaoId}) => {
             console.log('Response', response) 
             setNotification({
                 open: true,
-                message: `Transacao ${description} atualizada com sucesso!`,
+                message: `Transação ${description} atualizada com sucesso!`,
                 severity: 'success'
             })
         } catch (error) {
@@ -136,21 +136,21 @@ export const TransacoesUpdate = ({transacaoId}) => {
                     </S.Select>
                 </S.FormControl>
                 <S.FormControl fullWidth>
-                    <S.InputLabel id="categoria">Categorias</S.InputLabel>
+                    <S.InputLabel id="category">Categories</S.InputLabel>
                     <S.Select
-                        labelId='Categoria'
-                        id='categoria_select'
-                        name="categoria"
-                        value={categoria}
-                        label="Categoria"
+                        labelId='Category'
+                        id='category_select'
+                        name="category"
+                        value={category}
+                        label="Category"
                         onChange={onChangeValue}
                     >
-                        {categorias.map(categoria =>
-                            <S.MenuItem key={categoria.id} value={categoria.id}>{categoria.name}</S.MenuItem>
+                        {categories.map(category =>
+                            <S.MenuItem key={category.id} value={category.id}>{category.name}</S.MenuItem>
                         )}
                     </S.Select>
                 </S.FormControl>
-                <S.TextField onChange={onChangeValue} name="dateTransacao" label="Data da Transacao" variant="outlined" value={dateTransacao} color="primary" fullWidth/>
+                <S.TextField onChange={onChangeValue} name="dateTransaction" label="Data da Transacao" variant="outlined" value={dateTransaction} color="primary" fullWidth/>
                 <S.Button variant="contained" color="success" type="submit">Enviar</S.Button>
             </S.Form>
 

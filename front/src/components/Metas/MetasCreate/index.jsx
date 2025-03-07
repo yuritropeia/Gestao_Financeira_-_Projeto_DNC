@@ -7,7 +7,7 @@ import { useState } from 'react'
 export const MetasCreate = () => {
     const [description, setDescription] = useState();
     const [value, setValue] = useState();
-    const [dateMeta, setDateMeta] = useState();
+    const [dateGoal, setDateGoal] = useState();
 
     const [notification, setNotification] = useState({
         open: false,
@@ -19,7 +19,7 @@ export const MetasCreate = () => {
         const { name, value } = e.target
         if (name === 'description') setDescription(value)
         if (name === 'value') setValue(value)
-        if (name === 'dateMeta') setDateMeta(value)
+        if (name === 'dateGoal') setDateGoal(value)
     }
 
     const onSubmit = async (e) => {
@@ -27,7 +27,7 @@ export const MetasCreate = () => {
         console.log('name: ', description)
         try {
             const token = localStorage.getItem('token')
-            const response = await axios.post('http://localhost:8080/metas', { description, value, date: dateMeta }, {
+            const response = await axios.post('http://localhost:8080/goals', { description, value, date: dateGoal }, {
                 headers: {
                     Authorization: `Bearer ${ token }`
                 }
@@ -64,7 +64,7 @@ export const MetasCreate = () => {
                 <S.H1>Criar Meta</S.H1>
                 <S.TextField onChange={onChangeValue} name= "description" label="Descricao" variant="outlined" color="primary" fullWidth/>
                 <S.TextField onChange={onChangeValue} name="value" label="Valor" variant="outlined" color="primary" fullWidth />
-                <S.TextField onChange={onChangeValue} name= "dateMeta" label="Data da Meta" variant="outlined" color="primary" fullWidth/>
+                <S.TextField onChange={onChangeValue} name= "dateGoal" label="Data da Meta" variant="outlined" color="primary" fullWidth/>
                 <S.Button variant="contained" color="success" type="submit">Enviar</S.Button>
             </S.Form>
 

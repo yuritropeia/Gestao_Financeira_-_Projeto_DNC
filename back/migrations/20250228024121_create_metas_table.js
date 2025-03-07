@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 export const up = function(knex) {
-return knex.schema.createTable('metas', (table) => {
+return knex.schema.createTable('goals', (table) => {
     table.bigIncrements('id');
     table.string('description');
     table.integer('value');
@@ -18,5 +18,5 @@ return knex.schema.createTable('metas', (table) => {
  * @returns { Promise<void> }
  */
 export const down = function(knex) {
-    return knex.schema.dropTable('metas');
+    return knex.schema.dropTable('goals');
 };

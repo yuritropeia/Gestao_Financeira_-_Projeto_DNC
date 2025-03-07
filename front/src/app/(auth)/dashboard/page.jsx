@@ -2,13 +2,13 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-//import { CategoriasCreate } from '../../../components/Categorias/CategoriasCreate'
+import { CategoriasCreate } from '../../../components/Categorias/CategoriasCreate'
 //import { CategoriasUpdate } from '../../../components/Categorias/CategoriasUpdate'
 //import { MetasCreate } from '../../../components/Metas/MetasCreate'
 //import { MetasUpdate } from '../../../components/Metas/MetasUpdate'
 //import { TransacoesCreate } from '../../../components/Transacoes/TransacoesCreate'
 //import { TransacoesUpdate } from '../../../components/Transacoes/TransacoesUpdate'
-import { Menu } from '../../../components/Menu'
+//import { Menu } from '../../../components/Menu'
 
 export const DashboardPage = () => {
     
@@ -37,7 +37,7 @@ export const DashboardPage = () => {
     return (
         <div>
             <h1>Dashboard</h1>
-            <Menu></Menu>
+            <CategoriasCreate></CategoriasCreate>
         </div>
     );
 };
