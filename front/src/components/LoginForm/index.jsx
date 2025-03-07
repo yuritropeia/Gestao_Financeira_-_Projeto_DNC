@@ -3,8 +3,11 @@
 import * as S from './style.jsx'
 import axios from 'axios'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation.js';
 
 export const LoginForm = () => {
+    const router = useRouter()
+    
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +37,7 @@ export const LoginForm = () => {
                 message: `Usuário ${email} autenticado com sucesso!`,
                 severity: 'success'
             })
+            router.push('/dashboard')
         } catch (error) {
             setNotification({
                 open: true,

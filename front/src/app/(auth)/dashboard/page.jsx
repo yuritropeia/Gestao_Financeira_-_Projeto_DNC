@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 //import { MetasCreate } from '../../../components/Metas/MetasCreate'
 //import { MetasUpdate } from '../../../components/Metas/MetasUpdate'
 //import { TransacoesCreate } from '../../../components/Transacoes/TransacoesCreate'
-import { TransacoesUpdate } from '../../../components/Transacoes/TransacoesUpdate'
+//import { TransacoesUpdate } from '../../../components/Transacoes/TransacoesUpdate'
+import { Menu } from '../../../components/Menu'
 
 export const DashboardPage = () => {
     
@@ -36,7 +37,7 @@ export const DashboardPage = () => {
     return (
         <div>
             <h1>Dashboard</h1>
-            <TransacoesUpdate transacaoId={1}></TransacoesUpdate>
+            <Menu></Menu>
         </div>
     );
 };
