@@ -2,12 +2,45 @@
 
 import * as S from './style.jsx'
 import axios from 'axios'
-import { useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import { NumericFormat } from 'react-number-format';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { formatISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
-export const MetasCreate = () => {
+const NumericFormatCustom = forwardRef(function NumericFormatCustom(props, ref) {
+    const { onChange, ...other } = props;
+    return (
+        <NumericFormat
+            {...other}
+            getInputRef={ref}
+            onValueChange={(values) => {
+                onChange({
+                    target: {
+                        name: props.name,
+                        value: values.value,
+                    },
+                });
+            }}
+            thousandSeparator="."
+            decimalSeparator=','
+            valueIsNumericString
+            prefix='R$'
+        />
+    );
+})
+
+export const MetasCreate = ({openModal, closeModal}) => {
     const [description, setDescription] = useState();
     const [value, setValue] = useState();
-    const [dateGoal, setDateGoal] = useState();
+    const [dateGoal, setDateGoal] = useState(new Date());
+    const [open, setOpen] = useState(false);
 
     const [notification, setNotification] = useState({
         open: false,
@@ -19,7 +52,6 @@ export const MetasCreate = () => {
         const { name, value } = e.target
         if (name === 'description') setDescription(value)
         if (name === 'value') setValue(value)
-        if (name === 'dateGoal') setDateGoal(value)
     }
 
     const onSubmit = async (e) => {
@@ -27,7 +59,7 @@ export const MetasCreate = () => {
         console.log('name: ', description)
         try {
             const token = localStorage.getItem('token')
-            const response = await axios.post('http://localhost:8080/goals', { description, value, date: dateGoal }, {
+            const response = await axios.post('http://localhost:8080/goals', { description, value: value * 100, date: formatISO(dateGoal, {representation: 'date', locale: ptBR})}, {
                 headers: {
                     Authorization: `Bearer ${ token }`
                 }
@@ -58,21 +90,49 @@ export const MetasCreate = () => {
     })
     }
 
+    useEffect(() => {
+        if (openModal) {
+            setOpen(true);
+        } 
+    }, [openModal])
+
+    const handleCloseModal = () => {
+        setOpen(false);
+        closeModal(false);
+    };
+
     return (
         <>
-            <S.Form onSubmit={ onSubmit }>
-                <S.H1>Criar Meta</S.H1>
-                <S.TextField onChange={onChangeValue} name= "description" label="Descricao" variant="outlined" color="primary" fullWidth/>
-                <S.TextField onChange={onChangeValue} name="value" label="Valor" variant="outlined" color="primary" fullWidth />
-                <S.TextField onChange={onChangeValue} name= "dateGoal" label="Data da Meta" variant="outlined" color="primary" fullWidth/>
-                <S.Button variant="contained" color="success" type="submit">Enviar</S.Button>
-            </S.Form>
-
             <S.Snackbar open={notification.open} autoHideDuration={3000} onClose={handleClose}>
                 <S.Alert onClose={handleClose} variant="filled" severity={notification.severity} sx={{width: '100%'}}>
                     {notification.message}
                 </S.Alert>
             </S.Snackbar>
+
+            <Dialog open={open} onClose={handleCloseModal}>
+                <DialogTitle>Nova meta</DialogTitle>
+                <DialogContent>
+                <S.Form onSubmit={ onSubmit }>
+                    <S.TextField onChange={onChangeValue} name= "description" label="Descricao" variant="outlined" color="primary" fullWidth/>
+                    <S.TextField
+                        name="value"
+                        label="Valor"
+                        onChange={onChangeValue}
+                        id="formatted-numberformat-input"
+                        InputProps={{ inputComponent: NumericFormatCustom }}
+                        variant="outlined"
+                        color="primary"
+                        fullWidth
+                        />
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+                            <DatePicker onChange={(newValue) => setDateGoal(newValue)} fullWidth/>
+                    </LocalizationProvider>
+                </S.Form>
+                </DialogContent>
+                <DialogActions style={{display: 'flex', justifyContent: 'Center'}}>
+                <S.Button variant="contained" color="success" type="submit" onClick={onSubmit}>Salvar</S.Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

@@ -10,6 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export const CategoriasCreate = ({openModal, closeModal}) => {
     const [name, setName] = useState();
+    const [open, setOpen] = useState(false);
 
     const [notification, setNotification] = useState({
         open: false,
@@ -57,8 +58,6 @@ export const CategoriasCreate = ({openModal, closeModal}) => {
         severity: ''
     })
     }
-
-    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         if (openModal) {

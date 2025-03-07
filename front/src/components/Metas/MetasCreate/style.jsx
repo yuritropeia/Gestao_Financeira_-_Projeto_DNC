@@ -8,6 +8,7 @@ export const Button = styled(ButtonMui)`
 `
 
 export const TextField = styled(TextFieldMui)`
+margim-bottom: 15px
 `
 
 export const H1 = styled.h1`
@@ -19,7 +20,7 @@ export const Form = styled.form`
     align-items: center;
     justify-content: center;
     gap: 12px;
-    min-height: 800px;
+    min-height: 100px;
 `
 
 export const Alert = styled(AlertMui)`

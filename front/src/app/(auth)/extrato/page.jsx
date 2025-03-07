@@ -4,6 +4,7 @@ import { Menu } from '../../../components/Menu'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CategoriasCreate } from '../../../components/Categorias/CategoriasCreate'
+import { MetasCreate } from '../../../components/Metas/MetasCreate'
 //import { CategoriasUpdate } from '../../../components/Categorias/CategoriasUpdate'
 import Button from '@mui/material/Button'
 
@@ -12,7 +13,8 @@ export const ExtratoPage = () => {
         id: null
     });
 
-    const [openModal, setOpenModal] = useState(false);
+    const [openModalCategoria, setOpenModalCategoria] = useState(false);
+    const [openModalMeta, setOpenModalMeta] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -35,11 +37,12 @@ export const ExtratoPage = () => {
     return (
         <>
             <div style={{display: 'flex', gap: '15px'}}>
-                <Button variant="contained" color="primary" type="submit" onClick={() => setOpenModal(true)}>Nova Categoria</Button>
+                <Button variant="contained" color="primary" type="submit" onClick={() => setOpenModalCategoria(true)}>Nova Categoria</Button>
                 <Button variant="contained" color="primary" type="submit" >Nova Transação</Button>
-                <Button variant="contained" color="primary" type="submit" >Nova Meta</Button>
+                <Button variant="contained" color="primary" type="submit" onClick={() => setOpenModalMeta(true)}>Nova Meta</Button>
             </div>
-            <CategoriasCreate openModal={openModal} closeModal={setOpenModal} />
+            <CategoriasCreate openModal={openModalCategoria} closeModal={setOpenModalCategoria} />
+            <MetasCreate openModal={openModalMeta} closeModal={setOpenModalMeta} />
         </>
         
     );
