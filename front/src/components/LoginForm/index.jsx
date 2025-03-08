@@ -29,7 +29,6 @@ export const LoginForm = () => {
         try {
             const response = await axios.post('http://localhost:8080/auth/login', { email, password })
             localStorage.setItem('token', response.data.data.token)
-            console.log('Response', response) 
             setNotification({
                 open: true,
                 message: `Usuário ${email} autenticado com sucesso!`,

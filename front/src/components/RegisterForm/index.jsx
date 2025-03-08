@@ -31,7 +31,6 @@ export const RegisterForm = () => {
         try {
             const response = await axios.post('http://localhost:8080/auth/register', { name, email, password })
             localStorage.setItem('token', response.data.data.token)
-            console.log('Response', response)
             setNotification({
                 open: true,
                 message: `Usuário ${email} cadastrado com sucesso!!`,

@@ -6,6 +6,7 @@ import { CategoriasCreate } from '../../../components/Categorias/CategoriasCreat
 import { MetasCreate } from '../../../components/Metas/MetasCreate'
 import Button from '@mui/material/Button'
 import TransacoesCreate from '@/components/Transacoes/TransacoesCreate';
+import TransacoesList from "@/components/Transacoes/TransacoesList";
 
 export const ExtratoPage = () => {
     const [user, setUser] = useState({
@@ -44,6 +45,7 @@ export const ExtratoPage = () => {
             <CategoriasCreate openModal={openModalCategoria} closeModal={setOpenModalCategoria} />
             <MetasCreate openModal={openModalMeta} closeModal={setOpenModalMeta} />
             <TransacoesCreate openModal={openModalTransacao} closeModal={setOpenModalTransacao} />
+            <TransacoesList/>
         </>
         
     );
