@@ -33,12 +33,15 @@ export const CategoriasCreate = ({openModal, closeModal}) => {
                     Authorization: `Bearer ${ token }`
                 }
             })
-            console.log('Response', response) 
+             
             setNotification({
                 open: true,
                 message: `Categoria ${name} criada com sucesso!`,
                 severity: 'success'
             })
+
+            handleCloseModal();
+            
         } catch (error) {
             setNotification({
                 open: true,

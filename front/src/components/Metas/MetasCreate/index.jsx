@@ -64,12 +64,15 @@ export const MetasCreate = ({openModal, closeModal}) => {
                     Authorization: `Bearer ${ token }`
                 }
             })
-            console.log('Response', response) 
+             
             setNotification({
                 open: true,
                 message: `Meta ${description} criada com sucesso!`,
                 severity: 'success'
             })
+
+            handleCloseModal();
+            
         } catch (error) {
             setNotification({
                 open: true,
