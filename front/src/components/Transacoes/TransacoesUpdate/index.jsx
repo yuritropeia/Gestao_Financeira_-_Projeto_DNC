@@ -81,7 +81,6 @@ export const TransacoesUpdate = ({transactionId}) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log('name: ', description)
         try {
             const token = localStorage.getItem('token')
             const response = await axios.put(`http://localhost:8080/transacoes/${transactionId}`, { description, value, date: dateTransaction, type, category_id: category, user_id: userId}, {
@@ -89,7 +88,6 @@ export const TransacoesUpdate = ({transactionId}) => {
                     Authorization: `Bearer ${ token }`
                 }
             })
-            console.log('Response', response) 
             setNotification({
                 open: true,
                 message: `Transação ${description} atualizada com sucesso!`,

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Card } from '../Panel/Card'
+import { Card } from '../Card'
 import Grid from '@mui/material/Grid'
 import AccountBalanceWallet from '@mui/icons-material/AccountBalanceWallet'
 import SyncAltIcon from '@mui/icons-material/SyncAlt'
@@ -45,9 +45,7 @@ export const Panel = () => {
 
                 setSomatorio(somatorio)
                         
-            } catch (error) {
-                console.log(error)
-            }
+            } catch (error) {}
         }
             
         getTransactions();
@@ -65,9 +63,7 @@ export const Panel = () => {
                 })
                     
                 setGoals(response.data.data)        
-            } catch (error) {
-                console.log(error)
-            }
+            } catch (error) {}
         }
             
         getGoals();

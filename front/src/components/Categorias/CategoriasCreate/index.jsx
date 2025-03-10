@@ -25,7 +25,6 @@ export const CategoriasCreate = ({openModal, closeModal}) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log('name: ', name)
         try {
             const token = localStorage.getItem('token')
             const response = await axios.post('http://localhost:8080/categories', { name }, {

@@ -31,7 +31,6 @@ export const CategoriasUpdate = ({categoryId}) => {
 
                 setName(response.data.data.name);
                 setUserId(response.data.data.user_id);
-                console.log(userId)
                 
             } catch (error) {
                 setNotification({
@@ -47,7 +46,6 @@ export const CategoriasUpdate = ({categoryId}) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log('name: ', name)
         try {
             const token = localStorage.getItem('token')
             await axios.put(`http://localhost:8080/categories/${ categoryId}`, { name, user_Id: userId }, {

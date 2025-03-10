@@ -31,7 +31,7 @@ export const DashboardPage = () => {
 
     return (
         <div>
-            <h1>Olá, {user.name}</h1>
+            <h1>Olá, { user.name }</h1>
             <Panel></Panel>
             <Chart></Chart>
         </div>

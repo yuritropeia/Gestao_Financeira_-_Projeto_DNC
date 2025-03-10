@@ -56,7 +56,6 @@ export const MetasCreate = ({openModal, closeModal}) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log('name: ', description)
         try {
             const token = localStorage.getItem('token')
             const response = await axios.post('http://localhost:8080/goals', { description, value: value * 100, date: formatISO(dateGoal, {representation: 'date', locale: ptBR})}, {

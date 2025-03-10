@@ -82,7 +82,6 @@ export const TransacoesCreate = ({openModal, closeModal}) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log('name: ', description)
         try {
             const token = localStorage.getItem('token')
             const response = await axios.post('http://localhost:8080/transactions', { description, value: value * 100, date: formatISO(dateTransaction, {representation: 'date', locale: ptBR}), type, category_id: category}, {
